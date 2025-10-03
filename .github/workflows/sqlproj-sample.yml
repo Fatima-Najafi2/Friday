@@ -2,7 +2,7 @@ name: sqlproj-sample
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ] 
 
 jobs:
   build:
@@ -21,3 +21,10 @@ jobs:
 
     - name: Build SQL Project
       run: msbuild "./Friday/Friday.sqlproj"
+
+    - name: Deploy
+      uses: azure/sql-action@v2
+      with:
+        connection-string: ${{ secrets.SQL_CONNECTION_STRING }}
+        action: 'publish'
+        path: './Friday/bin/Debug/Friday.dacpac'
